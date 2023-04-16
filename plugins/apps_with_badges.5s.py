@@ -3,6 +3,7 @@
 #ref: https://stackoverflow.com/questions/75163201/how-can-i-get-the-dock-badge-text-of-other-applications
 
 from Foundation import NSBundle
+from AppKit import NSNull
 import objc
 CoreServices = NSBundle.bundleWithIdentifier_('com.apple.CoreServices')
 
@@ -34,26 +35,41 @@ signal_color = 'iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAA
 # bars = 'iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAqklEQVR4nGL4z0AdSCVj4AZBqH8sMOF/ogz/Of4CRXjhIpxQEUm4CCNUlybcBITB/zhB1F9DJBEpsCYJhMhfE7AIO0LkZRjYDFQ3YvqXOBGCipR/Uckgqrlo1KBRg0YNGjVo1KBRg0aoQT8CEQL/uEAUSiNCGkQhNyL+mIJFOBAi0EYEUFABqokJJvdPCNqI4YKLsENFRBEOgepSxnQhBZBqBgEAAAD//wMA7zsOXl0uqHMAAAAASUVORK5CYII='
 
 string = ''
-if 'WhatsApp' in app_badges:
-    if app_badges['WhatsApp'] != '!':
-        if app_badges['WhatsApp'] and int(app_badges['WhatsApp']) > 0:
-            string = string + 'W'
-            print('| image=' + whatsapp_color)
-    else:
-        string = string + 'W'
-        print('| sfimage=exclamationmark.bubble')
-        # print('| image=' + whatsapp_bw)
 
-if 'Signal' in app_badges:
-    if app_badges['Signal'] and int(app_badges['Signal']) > 0:
-        string = string + 'S'
-        print('| image=' + signal_color)
+for app, badge in app_badges.items():
+    if app == 'WhatsApp' and badge != '':
+        if badge == '!':
+            string = string + 'E'
+        elif int(badge) > 0:
+            string = string + 'W'
+        else:
+            print('oopsa')
+    elif app == 'Signal' and badge != '':
+        if int(badge) > 0:
+            string = string + 'S'
+        else:
+            print('oopsb')
+    elif app == 'Telegram' and badge != NSNull.null():
+        if int(badge) > 0:
+            string = string + 'T'
+        else:
+            print('oopsc')
+    elif badge !='' and badge != NSNull.null():
+        string = string + 'O'
+
+# the reason to do this in two stages, is only the first image printed is displayed, so this is a simple way 
+# to make sure the most important notification is shown
+
+if 'E' in string:
+    print('| sfimage=exclamationmark.bubble')
+if 'W' in string:
+    print('| image=' + whatsapp_color)
+if 'S' in string:
+    print('| image=' + signal_color)
+if 'T' in string:
+    print('| sfimage=airplane.departure')
+if 'O' in string:
+    print('| sfimage=bell.badge')
+
 if len(string) == 0:
     print(string)
-
-# print('a| image=' + whasapp_bw)
-# print('| image=' + signal_color)
-# print('| image=' + whatsapp_color)
-
-# print('| image=iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAqklEQVR4nGL4z0AdSCVj4AZBqH8sMOF/ogz/Of4CRXjhIpxQEUm4CCNUlybcBITB/zhB1F9DJBEpsCYJhMhfE7AIO0LkZRjYDFQ3YvqXOBGCipR/Uckgqrlo1KBRg0YNGjVo1KBRg0aoQT8CEQL/uEAUSiNCGkQhNyL+mIJFOBAi0EYEUFABqokJJvdPCNqI4YKLsENFRBEOgepSxnQhBZBqBgEAAAD//wMA7zsOXl0uqHMAAAAASUVORK5CYII=')
-# print(app_badges)
