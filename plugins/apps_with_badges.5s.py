@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/Users/da5id/Documents/projects/bitbar/venv/bin/python3
 #ref: https://gist.github.com/pudquick/eebc4d569100c8e3039bf3eae56bee4c
 #ref: https://stackoverflow.com/questions/75163201/how-can-i-get-the-dock-badge-text-of-other-applications
 
@@ -37,7 +37,7 @@ signal_color = 'iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAA
 string = ''
 
 for app, badge in app_badges.items():
-    if app == 'WhatsApp' and badge != '':
+    if app == 'WhatsApp (old)' and badge != '':
         if badge == '!':
             string = string + 'E'
         elif int(badge) > 0:
